@@ -8,11 +8,11 @@ import { adminService } from "@/services/admin-service"
 export function AdminDashboard() {
   const [stats, setStats] = useState({
     totalProducts: 0,
-    totalUsers: 0,
     totalOrders: 0,
+    totalUsers: 0,
     totalRevenue: 0,
-    recentOrders: [],
-    topProducts: [],
+    recentOrders: [], // <-- default to empty array
+    topProducts: [], // <-- add this if you use it
   })
   const [loading, setLoading] = useState(true)
 
@@ -96,7 +96,9 @@ export function AdminDashboard() {
             <DollarSign className="h-4 w-4 text-muted-foreground" />
           </CardHeader>
           <CardContent>
-            <div className="text-2xl font-bold">${stats.totalRevenue.toFixed(2)}</div>
+            <div className="text-2xl font-bold">${typeof stats.totalRevenue === "number"
+    ? stats.totalRevenue.toFixed(2)
+    : "N/A"}</div>
             <p className="text-xs text-muted-foreground">
               <TrendingUp className="inline h-3 w-3 mr-1" />
               +8% from last month
@@ -113,18 +115,22 @@ export function AdminDashboard() {
           </CardHeader>
           <CardContent>
             <div className="space-y-4">
-              {stats.recentOrders.map((order) => (
-                <div key={order.id} className="flex items-center justify-between">
-                  <div>
-                    <p className="font-medium">Order #{order.id}</p>
-                    <p className="text-sm text-muted-foreground">{order.customerName}</p>
+              {Array.isArray(stats.recentOrders) ? (
+                stats.recentOrders.map(order => (
+                  <div key={order._id || order.id} className="flex items-center justify-between">
+                    <div>
+                      <p className="font-medium">Order #{order.id}</p>
+                      <p className="text-sm text-muted-foreground">{order.customerName}</p>
+                    </div>
+                    <div className="text-right">
+                      <p className="font-medium">${order.total.toFixed(2)}</p>
+                      <p className="text-sm text-muted-foreground">{order.status}</p>
+                    </div>
                   </div>
-                  <div className="text-right">
-                    <p className="font-medium">${order.total.toFixed(2)}</p>
-                    <p className="text-sm text-muted-foreground">{order.status}</p>
-                  </div>
-                </div>
-              ))}
+                ))
+              ) : (
+                <div>No recent orders</div>
+              )}
             </div>
           </CardContent>
         </Card>
@@ -135,18 +141,22 @@ export function AdminDashboard() {
           </CardHeader>
           <CardContent>
             <div className="space-y-4">
-              {stats.topProducts.map((product) => (
-                <div key={product.id} className="flex items-center justify-between">
-                  <div>
-                    <p className="font-medium">{product.name}</p>
-                    <p className="text-sm text-muted-foreground">{product.category}</p>
+              {Array.isArray(stats.topProducts) ? (
+                stats.topProducts.map(product => (
+                  <div key={product._id || product.id} className="flex items-center justify-between">
+                    <div>
+                      <p className="font-medium">{product.name}</p>
+                      <p className="text-sm text-muted-foreground">{product.category}</p>
+                    </div>
+                    <div className="text-right">
+                      <p className="font-medium">{product.sales} sold</p>
+                      <p className="text-sm text-muted-foreground">${product.revenue.toFixed(2)}</p>
+                    </div>
                   </div>
-                  <div className="text-right">
-                    <p className="font-medium">{product.sales} sold</p>
-                    <p className="text-sm text-muted-foreground">${product.revenue.toFixed(2)}</p>
-                  </div>
-                </div>
-              ))}
+                ))
+              ) : (
+                <div>No top products</div>
+              )}
             </div>
           </CardContent>
         </Card>

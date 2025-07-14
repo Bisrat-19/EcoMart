@@ -20,3 +20,22 @@ exports.getDashboardStats = async (req, res) => {
     res.status(500).json({ error: 'Server error' });
   }
 };
+
+exports.createProduct = async (req, res) => {
+  try {
+    const newProduct = new Product(req.body);
+    await newProduct.save();
+    res.status(201).json(newProduct);
+  } catch (error) {
+    res.status(500).json({ message: 'Error creating product', error: error.message });
+  }
+};
+
+exports.getAllProducts = async (req, res) => {
+  try {
+    const products = await Product.find();
+    res.json(products);
+  } catch (error) {
+    res.status(500).json({ message: 'Error fetching products', error: error.message });
+  }
+};
