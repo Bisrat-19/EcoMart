@@ -22,7 +22,12 @@ export function UserManagement() {
   const fetchUsers = async () => {
     try {
       const data = await adminService.getAllUsers()
-      setUsers(data)
+      // Normalize _id to id for React keys
+      const normalized = data.map((user) => ({
+        ...user,
+        id: user.id || user._id,
+      }))
+      setUsers(normalized)
     } catch (error) {
       console.error("Error fetching users:", error)
     } finally {

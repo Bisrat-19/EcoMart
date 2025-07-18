@@ -28,3 +28,12 @@ exports.getUserOrders = async (req, res) => {
     res.status(500).json({ error: 'Server error' });
   }
 };
+
+exports.getMyOrders = async (req, res) => {
+  try {
+    const orders = await Order.find({ user: req.user._id }).populate('items.product');
+    res.json(orders);
+  } catch (err) {
+    res.status(500).json({ error: 'Server error' });
+  }
+};

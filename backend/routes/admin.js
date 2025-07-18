@@ -6,5 +6,8 @@ const { authMiddleware, adminMiddleware } = require('../middleware/authMiddlewar
 router.get('/dashboard', authMiddleware, adminMiddleware, adminController.getDashboardStats);
 router.post('/products', authMiddleware, adminMiddleware, adminController.createProduct);
 router.get('/products', authMiddleware, adminMiddleware, adminController.getAllProducts);
+router.get('/users', authMiddleware, adminMiddleware, adminController.getAllUsers);
+router.get('/orders', authMiddleware, adminMiddleware, adminController.getAllOrders);
+router.put('/orders/:orderId/status', authMiddleware, adminMiddleware, adminController.updateOrderStatus);
 
 module.exports = router;

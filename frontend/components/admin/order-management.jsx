@@ -31,7 +31,12 @@ export function OrderManagement() {
   const fetchOrders = async () => {
     try {
       const data = await adminService.getAllOrders()
-      setOrders(data)
+      // Normalize _id to id for React keys and code
+      const normalized = data.map((order) => ({
+        ...order,
+        id: order.id || order._id,
+      }))
+      setOrders(normalized)
     } catch (error) {
       console.error("Error fetching orders:", error)
     } finally {

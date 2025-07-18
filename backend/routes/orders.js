@@ -3,12 +3,14 @@ const router = express.Router();
 const {
   createOrder,
   getOrderById,
-  getUserOrders
+  getUserOrders,
+  getMyOrders
 } = require('../controllers/orderController');
 const { authMiddleware } = require('../middleware/authMiddleware');
 
 router.post('/', authMiddleware, createOrder);
-router.get('/:id', authMiddleware, getOrderById);
+router.get('/my', authMiddleware, getMyOrders);
 router.get('/user/:userId', authMiddleware, getUserOrders);
+router.get('/:id', authMiddleware, getOrderById);
 
 module.exports = router;

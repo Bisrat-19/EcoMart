@@ -24,7 +24,9 @@ export function ProductManagement() {
   const fetchProducts = async () => {
     try {
       const data = await adminService.getAllProducts()
-      setProducts(data)
+      // Normalize _id to id for React keys
+      const normalized = data.map((p) => ({ ...p, id: p.id || p._id }))
+      setProducts(normalized)
     } catch (error) {
       console.error("Error fetching products:", error)
     } finally {

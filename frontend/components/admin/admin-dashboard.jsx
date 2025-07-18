@@ -150,7 +150,9 @@ export function AdminDashboard() {
                     </div>
                     <div className="text-right">
                       <p className="font-medium">{product.sales} sold</p>
-                      <p className="text-sm text-muted-foreground">${product.revenue.toFixed(2)}</p>
+                      <p className="text-sm text-muted-foreground">
+                        ${typeof product.revenue === "number" ? product.revenue.toFixed(2) : "0.00"}
+                      </p>
                     </div>
                   </div>
                 ))

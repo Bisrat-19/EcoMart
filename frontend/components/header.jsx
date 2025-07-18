@@ -118,6 +118,14 @@ export function Header() {
                     </Button>
                   </Link>
                 )}
+                {/* Add My Orders link for normal users */}
+                {user.role !== "admin" && (
+                  <Link href="/orders">
+                    <Button variant="ghost" size="sm">
+                      My Orders
+                    </Button>
+                  </Link>
+                )}
                 <Button variant="ghost" onClick={logout} size="sm">
                   Logout
                 </Button>
