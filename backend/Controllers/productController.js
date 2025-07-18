@@ -3,7 +3,12 @@ const Product = require('../models/Product');
 exports.getAllProducts = async (req, res) => {
   try {
     const products = await Product.find();
-    res.json(products);
+    // Map _id to id for each product
+    const productsWithId = products.map(product => ({
+      ...product.toObject(),
+      id: product._id,
+    }));
+    res.json(productsWithId);
   } catch (err) {
     res.status(500).json({ error: 'Server error' });
   }
@@ -13,7 +18,8 @@ exports.getProductById = async (req, res) => {
   try {
     const product = await Product.findById(req.params.id);
     if (!product) return res.status(404).json({ error: 'Product not found' });
-    res.json(product);
+    // Map _id to id
+    res.json({ ...product.toObject(), id: product._id });
   } catch (err) {
     res.status(500).json({ error: 'Server error' });
   }

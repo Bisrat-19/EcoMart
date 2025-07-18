@@ -7,14 +7,27 @@ exports.getDashboardStats = async (req, res) => {
     const totalProducts = await Product.countDocuments();
     const totalUsers = await User.countDocuments();
     const totalOrders = await Order.countDocuments();
-    const totalSales = await Order.aggregate([
+
+    // Calculate total revenue
+    const totalRevenueAgg = await Order.aggregate([
       { $group: { _id: null, total: { $sum: "$total" } } }
     ]);
+    const totalRevenue = totalRevenueAgg[0] ? totalRevenueAgg[0].total : 0;
+
+    // Get 5 most recent orders (add .lean() for plain JS objects)
+    const recentOrders = await Order.find().sort({ createdAt: -1 }).limit(5).lean();
+
+    // Get top 5 products by sales (if you have a 'sales' or 'sold' field, otherwise fallback to rating or stock)
+    // Here, we use 'rating' as a placeholder. Replace with your actual sales field if available.
+    const topProducts = await Product.find().sort({ rating: -1 }).limit(5).lean();
+
     res.json({
       totalProducts,
       totalUsers,
       totalOrders,
-      totalSales: totalSales[0] ? totalSales[0].total : 0
+      totalRevenue,
+      recentOrders,
+      topProducts
     });
   } catch (err) {
     res.status(500).json({ error: 'Server error' });
