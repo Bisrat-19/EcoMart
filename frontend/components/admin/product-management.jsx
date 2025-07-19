@@ -62,20 +62,20 @@ export function ProductManagement() {
 
   return (
     <div className="space-y-6">
-      <div className="flex justify-between items-center">
+      <div className="flex flex-col sm:flex-row sm:justify-between sm:items-center gap-4 sm:gap-0">
         <div className="flex items-center space-x-4">
-          <div className="relative">
+          <div className="relative w-full max-w-xs">
             <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400 h-4 w-4" />
             <Input
               placeholder="Search products..."
               value={searchTerm}
               onChange={(e) => setSearchTerm(e.target.value)}
-              className="pl-10 w-64"
+              className="pl-10 w-full"
             />
           </div>
         </div>
-        <Link href="/admin/products/add">
-          <Button className="bg-gradient-to-r from-green-600 to-emerald-600 hover:from-green-700 hover:to-emerald-700 shadow-lg hover:shadow-xl transition-all duration-300">
+        <Link href="/admin/products/add" className="w-full sm:w-auto">
+          <Button className="w-full sm:w-auto bg-gradient-to-r from-green-600 to-emerald-600 hover:from-green-700 hover:to-emerald-700 shadow-lg hover:shadow-xl transition-all duration-300">
             <Plus className="h-4 w-4 mr-2" />
             Add Product
           </Button>
@@ -86,8 +86,8 @@ export function ProductManagement() {
         <CardHeader>
           <CardTitle>Products ({filteredProducts.length})</CardTitle>
         </CardHeader>
-        <CardContent>
-          <Table>
+        <CardContent className="overflow-x-auto p-2 sm:p-4">
+          <Table className="min-w-[700px] w-full text-xs sm:text-sm">
             <TableHeader>
               <TableRow>
                 <TableHead>Product</TableHead>
@@ -113,7 +113,7 @@ export function ProductManagement() {
                       </div>
                       <div>
                         <p className="font-medium">{product.name}</p>
-                        <p className="text-sm text-gray-500">ID: {product.id}</p>
+                        <p className="text-xs sm:text-sm text-gray-500">ID: {product.id}</p>
                       </div>
                     </div>
                   </TableCell>

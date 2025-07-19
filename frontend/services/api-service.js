@@ -16,9 +16,12 @@ class ApiService {
     }
 
     // Add auth token if available
-    const token = localStorage.getItem("authToken")
+    let token;
+    if (typeof window !== "undefined") {
+      token = localStorage.getItem("authToken");
+    }
     if (token) {
-      config.headers.Authorization = `Bearer ${token}`
+      config.headers.Authorization = `Bearer ${token}`;
     }
 
     try {

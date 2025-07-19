@@ -72,19 +72,19 @@ export function OrderManagement() {
 
   return (
     <div className="space-y-6">
-      <div className="flex justify-between items-center">
-        <div className="flex items-center space-x-4">
-          <div className="relative">
+      <div className="flex flex-col sm:flex-row sm:justify-between sm:items-center gap-4 sm:gap-0">
+        <div className="flex flex-col sm:flex-row items-center gap-2 sm:gap-4 w-full">
+          <div className="relative w-full max-w-xs">
             <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400 h-4 w-4" />
             <Input
               placeholder="Search orders..."
               value={searchTerm}
               onChange={(e) => setSearchTerm(e.target.value)}
-              className="pl-10 w-64"
+              className="pl-10 w-full"
             />
           </div>
           <Select value={statusFilter} onValueChange={setStatusFilter}>
-            <SelectTrigger className="w-40">
+            <SelectTrigger className="w-full sm:w-40">
               <SelectValue />
             </SelectTrigger>
             <SelectContent>
@@ -103,8 +103,8 @@ export function OrderManagement() {
         <CardHeader>
           <CardTitle>Orders ({filteredOrders.length})</CardTitle>
         </CardHeader>
-        <CardContent>
-          <Table>
+        <CardContent className="overflow-x-auto p-2 sm:p-4">
+          <Table className="min-w-[800px] w-full text-xs sm:text-sm">
             <TableHeader>
               <TableRow>
                 <TableHead>Order ID</TableHead>
@@ -125,14 +125,14 @@ export function OrderManagement() {
                   <TableCell>
                     <div>
                       <p className="font-medium">{order.customerName}</p>
-                      <p className="text-sm text-gray-500">{order.customerEmail}</p>
+                      <p className="text-xs sm:text-sm text-gray-500">{order.customerEmail}</p>
                     </div>
                   </TableCell>
                   <TableCell>{order.itemCount} items</TableCell>
                   <TableCell>${order.total.toFixed(2)}</TableCell>
                   <TableCell>
                     <Select value={order.status} onValueChange={(value) => handleStatusChange(order.id, value)}>
-                      <SelectTrigger className="w-32">
+                      <SelectTrigger className="w-full sm:w-32">
                         <SelectValue>
                           <Badge className={statusColors[order.status]}>{order.status}</Badge>
                         </SelectValue>

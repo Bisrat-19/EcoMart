@@ -55,3 +55,26 @@ exports.deleteProduct = async (req, res) => {
     res.status(500).json({ error: 'Server error' });
   }
 };
+
+exports.searchProducts = async (req, res) => {
+  try {
+    const { q } = req.query;
+    if (!q) {
+      return res.json([]);
+    }
+    // Simple case-insensitive search by name or category
+    const products = await Product.find({
+      $or: [
+        { name: { $regex: q, $options: 'i' } },
+        { category: { $regex: q, $options: 'i' } }
+      ]
+    });
+    const productsWithId = products.map(product => ({
+      ...product.toObject(),
+      id: product._id,
+    }));
+    res.json(productsWithId);
+  } catch (err) {
+    res.status(500).json({ error: 'Server error' });
+  }
+};

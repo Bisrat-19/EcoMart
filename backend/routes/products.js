@@ -5,12 +5,14 @@ const {
   getProductById,
   createProduct,
   updateProduct,
-  deleteProduct
+  deleteProduct,
+  searchProducts
 } = require('../controllers/productController');
 const { authMiddleware, adminMiddleware } = require('../middleware/authMiddleware');
 
 // Public
 router.get('/', getAllProducts);
+router.get('/search', searchProducts);
 router.get('/:id', getProductById);
 
 // Admin only

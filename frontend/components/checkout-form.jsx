@@ -76,7 +76,7 @@ export function CheckoutForm() {
   }
 
   return (
-    <div className="grid lg:grid-cols-2 gap-8">
+    <div className="grid grid-cols-1 lg:grid-cols-2 gap-4 lg:gap-8">
       <div>
         <Card>
           <CardHeader>
@@ -84,7 +84,7 @@ export function CheckoutForm() {
           </CardHeader>
           <CardContent>
             <form onSubmit={handleSubmit} className="space-y-4">
-              <div className="grid grid-cols-2 gap-4">
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                 <div>
                   <Label htmlFor="firstName">First Name</Label>
                   <Input
@@ -124,7 +124,7 @@ export function CheckoutForm() {
                 <Input id="address" name="address" value={formData.address} onChange={handleInputChange} required />
               </div>
 
-              <div className="grid grid-cols-2 gap-4">
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                 <div>
                   <Label htmlFor="city">City</Label>
                   <Input id="city" name="city" value={formData.city} onChange={handleInputChange} required />
@@ -151,7 +151,7 @@ export function CheckoutForm() {
                 />
               </div>
 
-              <div className="grid grid-cols-2 gap-4">
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                 <div>
                   <Label htmlFor="expiryDate">Expiry Date</Label>
                   <Input
@@ -184,7 +184,7 @@ export function CheckoutForm() {
         </Card>
       </div>
 
-      <div>
+      <div className="mt-8 lg:mt-0">
         <Card className="sticky top-24">
           <CardHeader>
             <CardTitle>Order Summary</CardTitle>
@@ -192,7 +192,7 @@ export function CheckoutForm() {
           <CardContent>
             <div className="space-y-4 max-h-64 overflow-y-auto">
               {items.map((item) => (
-                <div key={item.id} className="flex justify-between text-sm">
+                <div key={item.id} className="flex justify-between text-xs sm:text-sm">
                   <span className="flex-1">
                     {item.name} x {item.quantity}
                   </span>
@@ -200,27 +200,8 @@ export function CheckoutForm() {
                 </div>
               ))}
             </div>
-
             <Separator className="my-4" />
-
-            <div className="space-y-2">
-              <div className="flex justify-between">
-                <span>Subtotal</span>
-                <span>${total.toFixed(2)}</span>
-              </div>
-              <div className="flex justify-between">
-                <span>Shipping</span>
-                <span className="text-green-600">Free</span>
-              </div>
-              <div className="flex justify-between">
-                <span>Tax (8%)</span>
-                <span>${(total * 0.08).toFixed(2)}</span>
-              </div>
-            </div>
-
-            <Separator className="my-4" />
-
-            <div className="flex justify-between text-lg font-semibold">
+            <div className="flex justify-between text-base sm:text-lg font-semibold mb-2">
               <span>Total</span>
               <span>${(total * 1.08).toFixed(2)}</span>
             </div>

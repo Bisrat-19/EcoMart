@@ -76,14 +76,14 @@ export function UserManagement() {
 
   return (
     <div className="space-y-6">
-      <div className="flex justify-between items-center">
-        <div className="relative">
+      <div className="flex flex-col sm:flex-row sm:justify-between sm:items-center gap-4 sm:gap-0">
+        <div className="relative w-full max-w-xs">
           <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400 h-4 w-4" />
           <Input
             placeholder="Search users..."
             value={searchTerm}
             onChange={(e) => setSearchTerm(e.target.value)}
-            className="pl-10 w-64"
+            className="pl-10 w-full"
           />
         </div>
       </div>
@@ -92,8 +92,8 @@ export function UserManagement() {
         <CardHeader>
           <CardTitle>Users ({filteredUsers.length})</CardTitle>
         </CardHeader>
-        <CardContent>
-          <Table>
+        <CardContent className="overflow-x-auto p-2 sm:p-4">
+          <Table className="min-w-[700px] w-full text-xs sm:text-sm">
             <TableHeader>
               <TableRow>
                 <TableHead>User</TableHead>
@@ -114,7 +114,7 @@ export function UserManagement() {
                       </div>
                       <div>
                         <p className="font-medium">{user.name}</p>
-                        <p className="text-sm text-gray-500">ID: {user.id}</p>
+                        <p className="text-xs sm:text-sm text-gray-500">ID: {user.id}</p>
                       </div>
                     </div>
                   </TableCell>

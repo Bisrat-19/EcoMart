@@ -41,7 +41,7 @@ export default function MyOrdersPage() {
   const delivered = orders.filter(o => o.status === "delivered").length
 
   return (
-    <div className="p-6 bg-gray-50 min-h-screen">
+    <div className="p-4 sm:p-6 bg-gray-50 min-h-screen">
       {/* Back to Store Button */}
       <div className="mb-4">
         <Link href="/">
@@ -52,47 +52,47 @@ export default function MyOrdersPage() {
         </Link>
       </div>
       {/* Page Title & Subtitle */}
-      <div className="mb-8">
-        <h1 className="text-3xl font-bold mb-1">My Orders</h1>
-        <p className="text-gray-500">Track your order history and status here.</p>
+      <div className="mb-6 sm:mb-8">
+        <h1 className="text-2xl sm:text-3xl font-bold mb-1">My Orders</h1>
+        <p className="text-gray-500 text-sm sm:text-base">Track your order history and status here.</p>
       </div>
 
       {/* Order summary cards */}
-      <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-4 mb-8">
+      <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-2 sm:gap-4 mb-6 sm:mb-8">
         <Card>
           <CardHeader className="flex flex-row items-center justify-between pb-2">
-            <CardTitle className="text-sm font-medium">Total Orders</CardTitle>
-            <ShoppingCart className="h-5 w-5 text-gray-400" />
+            <CardTitle className="text-xs sm:text-sm font-medium">Total Orders</CardTitle>
+            <ShoppingCart className="h-4 w-4 sm:h-5 sm:w-5 text-gray-400" />
           </CardHeader>
           <CardContent>
-            <div className="text-2xl font-bold">{totalOrders}</div>
+            <div className="text-xl sm:text-2xl font-bold">{totalOrders}</div>
           </CardContent>
         </Card>
         <Card>
           <CardHeader className="flex flex-row items-center justify-between pb-2">
-            <CardTitle className="text-sm font-medium">Pending</CardTitle>
-            <Clock className="h-5 w-5 text-yellow-400" />
+            <CardTitle className="text-xs sm:text-sm font-medium">Pending</CardTitle>
+            <Clock className="h-4 w-4 sm:h-5 sm:w-5 text-yellow-400" />
           </CardHeader>
           <CardContent>
-            <div className="text-2xl font-bold">{pending}</div>
+            <div className="text-xl sm:text-2xl font-bold">{pending}</div>
           </CardContent>
         </Card>
         <Card>
           <CardHeader className="flex flex-row items-center justify-between pb-2">
-            <CardTitle className="text-sm font-medium">Shipped</CardTitle>
-            <Truck className="h-5 w-5 text-purple-400" />
+            <CardTitle className="text-xs sm:text-sm font-medium">Shipped</CardTitle>
+            <Truck className="h-4 w-4 sm:h-5 sm:w-5 text-purple-400" />
           </CardHeader>
           <CardContent>
-            <div className="text-2xl font-bold">{shipped}</div>
+            <div className="text-xl sm:text-2xl font-bold">{shipped}</div>
           </CardContent>
         </Card>
         <Card>
           <CardHeader className="flex flex-row items-center justify-between pb-2">
-            <CardTitle className="text-sm font-medium">Delivered</CardTitle>
-            <CheckCircle className="h-5 w-5 text-green-400" />
+            <CardTitle className="text-xs sm:text-sm font-medium">Delivered</CardTitle>
+            <CheckCircle className="h-4 w-4 sm:h-5 sm:w-5 text-green-400" />
           </CardHeader>
           <CardContent>
-            <div className="text-2xl font-bold">{delivered}</div>
+            <div className="text-xl sm:text-2xl font-bold">{delivered}</div>
           </CardContent>
         </Card>
       </div>
@@ -100,10 +100,10 @@ export default function MyOrdersPage() {
       {/* Orders Table */}
       <Card>
         <CardHeader>
-          <CardTitle>Your Orders</CardTitle>
+          <CardTitle className="text-base sm:text-lg">Your Orders</CardTitle>
         </CardHeader>
-        <CardContent>
-          <Table>
+        <CardContent className="overflow-x-auto p-2 sm:p-4">
+          <Table className="min-w-[600px] w-full text-xs sm:text-sm">
             <TableHeader>
               <TableRow>
                 <TableHead>Order #</TableHead>
