@@ -1,7 +1,7 @@
 "use client"
 
 import Link from "next/link"
-import { ShoppingCart, Search, User, X, Menu } from "lucide-react"
+import { ShoppingCart, Search, User, X, Menu, Heart } from "lucide-react"
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
 import { Badge } from "@/components/ui/badge"
@@ -50,6 +50,7 @@ export function Header() {
     <header className="border-b bg-white/95 backdrop-blur-sm sticky top-0 z-50 shadow-sm">
       <div className="container mx-auto px-2 sm:px-4 py-3 sm:py-4">
         <div className="flex items-center justify-between">
+          {/* Logo on the left */}
           <Link
             href="/"
             className="text-xl sm:text-2xl font-bold bg-gradient-to-r from-green-600 to-emerald-600 bg-clip-text text-transparent"
@@ -57,40 +58,69 @@ export function Header() {
             EcoMart
           </Link>
 
-          {/* Search bar - always visible, shrinks on mobile */}
-          <div className="flex-1 max-w-xs sm:max-w-md mx-2 sm:mx-8 relative" ref={searchRef}>
-            <div className="relative">
-              <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400 h-4 w-4" />
-              <Input
-                placeholder="Search eco-friendly products..."
-                className="pl-10 pr-10 border-green-200 focus:border-green-400 text-sm sm:text-base"
-                value={searchQuery}
-                onChange={handleSearchChange}
-                onFocus={() => searchQuery.length > 0 && setShowResults(true)}
-              />
-              {searchQuery && (
-                <Button
-                  variant="ghost"
-                  size="icon"
-                  className="absolute right-1 top-1/2 transform -translate-y-1/2 h-8 w-8"
-                  onClick={handleClearSearch}
-                >
-                  <X className="h-4 w-4" />
-                </Button>
+          {/* Navigation in the center */}
+          <nav className="hidden md:flex flex-1 justify-center items-center space-x-6">
+            <Link href="/" className="text-sm font-medium hover:text-green-600">HOME</Link>
+            <a
+              href="/"
+              className="text-sm font-medium hover:text-green-600 cursor-pointer"
+              onClick={e => {
+                e.preventDefault();
+                if (window.location.pathname === "/") {
+                  const el = document.getElementById("products");
+                  if (el) el.scrollIntoView({ behavior: "smooth" });
+                } else {
+                  window.location.href = "/#products";
+                }
+              }}
+            >
+              PRODUCTS
+            </a>
+            <Link href="/orders" className="text-sm font-medium hover:text-green-600">MY ORDERS</Link>
+          </nav>
+
+          {/* Icons and profile on the right */}
+          <div className="flex items-center space-x-1 md:space-x-2">
+            {/* Search Icon - opens search bar as before */}
+            <div ref={searchRef} className="relative">
+              <Button variant="ghost" size="icon" onClick={() => setShowResults(true)}>
+                <Search className="h-5 w-5" />
+              </Button>
+              {showResults && (
+                <div className="absolute right-0 mt-2 w-64 z-50">
+                  <div className="relative">
+                    <Input
+                      placeholder="Search eco-friendly products..."
+                      className="pl-10 pr-10 border-green-200 focus:border-green-400 text-sm sm:text-base"
+                      value={searchQuery}
+                      onChange={handleSearchChange}
+                      autoFocus
+                    />
+                    {searchQuery && (
+                      <Button
+                        variant="ghost"
+                        size="icon"
+                        className="absolute right-1 top-1/2 transform -translate-y-1/2 h-8 w-8"
+                        onClick={handleClearSearch}
+                      >
+                        <X className="h-4 w-4" />
+                      </Button>
+                    )}
+                  </div>
+                  <SearchResults
+                    results={searchResults}
+                    isLoading={isSearching}
+                    query={searchQuery}
+                    onResultClick={handleResultClick}
+                  />
+                </div>
               )}
             </div>
-            {showResults && (
-              <SearchResults
-                results={searchResults}
-                isLoading={isSearching}
-                query={searchQuery}
-                onResultClick={handleResultClick}
-              />
-            )}
-          </div>
-
-          {/* Desktop Nav */}
-          <div className="hidden md:flex items-center space-x-4">
+            {/* Favorite Icon - for future functionality */}
+            <Button variant="ghost" size="icon">
+              <Heart className="h-5 w-5" />
+            </Button>
+            {/* Cart Icon - as before */}
             <Link href="/cart" className="relative">
               <Button variant="ghost" size="icon">
                 <ShoppingCart className="h-5 w-5" />
@@ -101,37 +131,29 @@ export function Header() {
                 )}
               </Button>
             </Link>
-            {user ? (
-              <div className="flex items-center space-x-2">
-                <div className="flex items-center space-x-2">
-                  <User className="h-4 w-4" />
-                  <span className="text-sm font-medium">{user.name}</span>
-                  {user.role === "admin" && (
-                    <Badge variant="secondary" className="text-xs">
-                      Admin
-                    </Badge>
-                  )}
-                </div>
-                {user.role === "admin" && (
-                  <Link href="/admin">
-                    <Button variant="ghost" size="sm">
-                      Admin Panel
-                    </Button>
-                  </Link>
-                )}
-                {user.role !== "admin" && (
-                  <Link href="/orders">
-                    <Button variant="ghost" size="sm">
-                      My Orders
-                    </Button>
-                  </Link>
-                )}
-                <Button variant="ghost" onClick={logout} size="sm">
-                  Logout
+            {/* Profile/User section with hover dropdown */}
+            {user && (
+              <div className="relative group">
+                <Button variant="ghost" size="icon">
+                  <User className="h-5 w-5" />
                 </Button>
+                <div className="absolute right-0 mt-2 w-40 bg-white border rounded shadow-lg opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-200 z-50">
+                  <div className="px-4 py-2 text-sm text-gray-700 border-b">{user.name}</div>
+                  {user.role === "admin" && (
+                    <Link href="/admin">
+                      <Button variant="ghost" size="sm" className="w-full justify-start">
+                        Admin Dashboard
+                      </Button>
+                    </Link>
+                  )}
+                  <Button variant="ghost" size="sm" className="w-full justify-start" onClick={logout}>
+                    Logout
+                  </Button>
+                </div>
               </div>
-            ) : (
-              <div className="flex items-center space-x-2">
+            )}
+            {!user && (
+              <div className="flex items-center space-x-1">
                 <Link href="/auth/login">
                   <Button variant="ghost" size="sm">
                     Login

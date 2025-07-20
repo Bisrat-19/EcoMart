@@ -42,15 +42,6 @@ export default function MyOrdersPage() {
 
   return (
     <div className="p-4 sm:p-6 bg-gray-50 min-h-screen">
-      {/* Back to Store Button */}
-      <div className="mb-4">
-        <Link href="/">
-          <Button variant="ghost" className="flex items-center text-gray-700 hover:text-green-700">
-            <ArrowLeft className="h-4 w-4 mr-2" />
-            Back to Store
-          </Button>
-        </Link>
-      </div>
       {/* Page Title & Subtitle */}
       <div className="mb-6 sm:mb-8">
         <h1 className="text-2xl sm:text-3xl font-bold mb-1">My Orders</h1>
