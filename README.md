@@ -35,7 +35,14 @@
 
 ## 📌 Installation & Setup
 
-### Backend
+### 1. Clone the Repository
+
+```bash
+git clone https://github.com/Bisrat-19/EcoMart.git
+cd EcoMart
+```
+
+### 2. Backend
 
 ```bash
 cd backend
@@ -44,8 +51,9 @@ npm install
 # MONGO_URI=your_mongodb_url
 # JWT_SECRET=your_jwt_secret
 npm run dev
+```
 
-### Frontend
+### 3. Frontend
 
 ```bash
 cd frontend
