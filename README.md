@@ -44,3 +44,10 @@ npm install
 # MONGO_URI=your_mongodb_url
 # JWT_SECRET=your_jwt_secret
 npm run dev
+
+### Frontend
+
+```bash
+cd frontend
+npm install
+npm run dev
